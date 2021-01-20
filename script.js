@@ -25,6 +25,11 @@ canvas.setOverlayImage('./img/artboard-overlay.png', canvas.renderAll.bind(canva
 
 
 
+fabric.Image.fromURL('./img/gucci.png', function(myImg) {
+  //i create an extra var for to change some image properties
+  var img1 = myImg.set({ left: 650, top: 180});
+  canvas.add(img1); 
+});
 fabric.Image.fromURL('./img/gf.png', function(myImg) {
   //i create an extra var for to change some image properties
   var img1 = myImg.set({ left: 850, top: 400 });
@@ -35,6 +40,7 @@ fabric.Image.fromURL('./img/egg.png', function(myImg) {
   var img1 = myImg.set({ left: 500, top: 300 });
   canvas.add(img1); 
 });
+
 
 
 
@@ -74,15 +80,16 @@ function addPicture(img) {
 
 
 // FOR DOWNLOADING DONT DELETE
-function downloadPNG (data) {
+$("#download").on("click", function(e) {
+  var prevCanvas = document.getElementById("preview");
+  var data = prevCanvas.toDataURL();  
   var downloadAnchorNode = document.createElement('a');
   downloadAnchorNode.setAttribute("href", data);
-  downloadAnchorNode.setAttribute("download", "Collage.png");
+  downloadAnchorNode.setAttribute("download", "superBeatifulCollageWowAmazing.png");
   document.body.appendChild(downloadAnchorNode); // required for firefox
   downloadAnchorNode.click();
   downloadAnchorNode.remove();
-
-}
+});
 // FOR DOWNLOADING DONT DELETE
 
 $("#save").on("click", function(e) {
@@ -259,17 +266,19 @@ $('#drawing-mode').on("click", function() {
   console.log("TOGGLING DRAWING MODE");
   canvas.isDrawingMode = !canvas.isDrawingMode;
   if (canvas.isDrawingMode) {
-    $('#drawing-mode').innerHTML = 'Cancel drawing mode';
+    $('#drawing-mode').text('Cancel drawing mode');
+    $('#drawing-mode').css("background-color", "gold");
     
     var brush = canvas.freeDrawingBrush;
     brush.color = document.getElementById("drawing-color").value;
     canvas.freeDrawingBrush.width = document.getElementById("drawing-line-width").value;
     
-    // $('#drawing-mode-options').style.display = '';
+    $('#drawing-mode-options').css("display", "block");
   }
   else {
-    $('#drawing-mode').innerHTML = 'Enter drawing mode';
-    // $('#drawing-mode-options').display = 'none';
+    $('#drawing-mode').text('Enter drawing mode');
+    $('#drawing-mode').css("background-color", "lightgray");
+    $('#drawing-mode-options').css("display", "none");
   }
 });
 
