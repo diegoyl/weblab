@@ -32,7 +32,7 @@ fabric.Image.fromURL('./img/gucci.png', function(myImg) {
 });
 fabric.Image.fromURL('./img/gf.png', function(myImg) {
   //i create an extra var for to change some image properties
-  var img1 = myImg.set({ left: 850, top: 400 });
+  var img1 = myImg.set({ left: 8250, top: 400 });
   canvas.add(img1); 
 });
 fabric.Image.fromURL('./img/egg.png', function(myImg) {
