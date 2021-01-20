@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "fabric": "^4.3.0"
+  },
+  "scripts": {
+    "dev": "lite-server"
+  }
+
+}
+
+
