@@ -1,18 +1,22 @@
+function init () {
+  var scale = 'scale(1)';
+  document.body.style.zoom = 1.0;
+  // document.body.style.webkitTransform =  scale;    // Chrome, Opera, Safari
+  // document.body.style.msTransform =   scale;       // IE 9
+  // document.body.style.transform = scale;     // General
+  console.log("script.js")
 
-
-console.log("script.js")
-
+}
 
 var canvas = new fabric.Canvas('c', {
   isDrawingMode: false
-  
 });
 canvas.setHeight(900);
 canvas.setWidth(1500);
 var mainCanvas = document.getElementById('c');
-var ctx = mainCanvas.getContext("2d");
-var cropCanvas = document.getElementById('cropCanvas');
-var cropCtx = cropCanvas.getContext("2d");
+var ctx = canvas.getContext("2d");
+// var cropCanvas = document.getElementById('cropCanvas');
+// var cropCtx = cropCanvas.getContext("2d");
 
 
 
@@ -69,140 +73,83 @@ function addPicture(img) {
 }
 
 
+// FOR DOWNLOADING DONT DELETE
+function downloadPNG (data) {
+  var downloadAnchorNode = document.createElement('a');
+  downloadAnchorNode.setAttribute("href", data);
+  downloadAnchorNode.setAttribute("download", "Collage.png");
+  document.body.appendChild(downloadAnchorNode); // required for firefox
+  downloadAnchorNode.click();
+  downloadAnchorNode.remove();
+
+}
+// FOR DOWNLOADING DONT DELETE
+
 $("#save").on("click", function(e) {
   discard();
-
-  const dimension = 150;
-  const scale = 6; 
-
-  let pixelData = ctx.getImageData(300, 150, dimension, dimension).data;
-  // let imageData = canvas.toDataURL();
-  // cropCtx.putImageData(imageData, 0, 0);
+  const scale = document.getElementById("preview").width/300;
+  var pngData;
 
 
-  // console.log("pixelData");
-  console.log(pixelData);
-  console.log(pixelData.length);
+  var prevCanvas = document.getElementById("preview");
+  var prevCtx = prevCanvas.getContext("2d");
+
+  var pred = new Image();
+  pred.onload = function() {
+    prevCtx.drawImage(pred, -600*scale, -300*scale, 1500*scale, 900*scale);
+    pngData = prevCanvas.toDataURL();
+    // UNCOMMENT TO DOWNLOAD
+    // downloadPNG(pngData);
+  };
+  pred.src = canvas.toDataURL('image/png');
+
+
+
+  // const dimension = 300;
+  // const scale = 3; 
+
+  // let pixelData = ctx.getImageData(600, 300, dimension, dimension).data;
+  // // let imageData = canvas.toDataURL();
+  // // cropCtx.putImageData(imageData, 0, 0);
+
+
+  // // console.log("pixelData");
+  // console.log(pixelData);
+  // console.log(pixelData.length);
     
-  var reshaped=[];
-  for(var p=0; p< pixelData.length; p+=4){ 
-    let color = [pixelData[p], pixelData[p+1], pixelData[p+2], pixelData[p+3]]
-    reshaped.push(color);
-  }
-  var reshaped2 = []
-  for(var k=0; k< dimension; k++){ 
-    let row = []
-    for(var j=0; j< dimension; j++){
-      row.push(reshaped[k*dimension+j])
-    }
-    reshaped2.push(row);
-  }
-  console.log("pixelDataReshaped");
-  console.log(reshaped2);
-  console.log(reshaped2.length);
+  // var reshaped=[];
+  // for(var p=0; p< pixelData.length; p+=4){ 
+  //   let color = [pixelData[p], pixelData[p+1], pixelData[p+2], pixelData[p+3]]
+  //   reshaped.push(color);
+  // }
+  // var reshaped2 = []
+  // for(var k=0; k< dimension; k++){ 
+  //   let row = []
+  //   for(var j=0; j< dimension; j++){
+  //     row.push(reshaped[k*dimension+j])
+  //   }
+  //   reshaped2.push(row);
+  // }
+  // console.log("pixelDataReshaped");
+  // console.log(reshaped2);
+  // console.log(reshaped2.length);
 
-  var r,g,b,a;   
-  for(var k=0; k< dimension; k++){ 
-    let row = reshaped2[k];
-    for(var j=0; j< dimension; j++){
+  // var r,g,b,a;   
+  // for(var k=0; k< dimension; k++){ 
+  //   let row = reshaped2[k];
+  //   for(var j=0; j< dimension; j++){
         
-        let pixel = row[j];
-        r = pixel[0];
-        g = pixel[1];
-        b = pixel[2];
-        a = pixel[3];
-        let color = "rgba("+r+","+g+","+b+", 1)";
-        cropCtx.fillStyle = color;  
-        cropCtx.fillRect(j*scale, k*scale, scale, scale); 
-    }
-    // console.log("pos: "+j+","+k);
-  }
-
-
-// $("#save").on("click", function(e) {
-//   const dimension = 300;
-//   const scale = 1; 
-
-//   let pixelData = ctx.getImageData(0, 0, 1500, 900).data;
-//   // let imageData = canvas.toDataURL();
-//   // cropCtx.putImageData(imageData, 0, 0);
-
-
-//   console.log("pixelData");
-//   console.log("X: "+pixelData[0].length);
-//   console.log("Y: "+pixelData.length);
-    
-//   var reshaped=[];
-//   for(var p=0; p< pixelData.length; p+=4){ 
-//     let color = [pixelData[p], pixelData[p+1], pixelData[p+2], pixelData[p+3]]
-//     reshaped.push(color);
-//   }
-//   console.log("pixels: "+reshaped.length);
-
-
-//   var reshaped2 = []
-//   for(var k=0; k< 900; k++){ 
-//     let row = []
-//     for(var j=0; j< 1500; j++){
-//       row.push(reshaped[k*900+j])
-//     }
-//     reshaped2.push(row);
-//   }
-//   console.log("pixelDataReshaped");
-//   // console.log(reshaped2);
-//   console.log("X: "+reshaped2[0].length);
-//   console.log("Y: "+reshaped2.length);
-//   console.log("Ch: "+reshaped2[0][0].length);
-
-//   var cutRows = reshaped2.slice(300,600); // gets middle 300 rows
-
-//   console.log("rows cut");
-//   // console.log(reshaped2);
-//   console.log("X: "+cutRows[0].length);
-//   console.log("Y: "+cutRows.length);
-//   console.log("Ch: "+cutRows[0][0].length);
-
-
-//   var finalReshape = []
-//   for(var k=0; k< 300; k++){ 
-//     let newRow = cutRows[k].slice(600,900); // gets middle 300 cols
-//     finalReshape.push(newRow);
-//   }
-  
-//   console.log("pixelDataCUT");
-//   console.log("X: "+finalReshape[0].length);
-//   console.log("Y: "+finalReshape.length);
-//   console.log("Ch: "+finalReshape[0][0].length);
-
-//   var r,g,b,a;   
-//   for(var k=0; k< finalReshape.length; k++){ 
-//     let row = finalReshape[k];
-//     for(var j=0; j< finalReshape[0].length; j++){
-        
-//         let pixel = row[j];
-//         r = pixel[0];
-//         g = pixel[1];
-//         b = pixel[2];
-//         a = pixel[3];
-//         let color = "rgba("+r+","+g+","+b+", 1)";
-//         cropCtx.fillStyle = color;  
-//         cropCtx.fillRect(j*scale, k*scale, scale, scale); 
-//     }
-//   }
-
-
-
-
-// FOR DOWNLOADING DONT DELETE
-      // var downloadAnchorNode = document.createElement('a');
-      // downloadAnchorNode.setAttribute("href",     dataStr);
-      // downloadAnchorNode.setAttribute("download", "Collage.png");
-      // document.body.appendChild(downloadAnchorNode); // required for firefox
-      // downloadAnchorNode.click();
-      // downloadAnchorNode.remove();
-// FOR DOWNLOADING DONT DELETE
-
-
+  //       let pixel = row[j];
+  //       r = pixel[0];
+  //       g = pixel[1];
+  //       b = pixel[2];
+  //       a = pixel[3];
+  //       let color = "rgba("+r+","+g+","+b+", 1)";
+  //       cropCtx.fillStyle = color;  
+  //       cropCtx.fillRect(j*scale, k*scale, scale, scale); 
+  //   }
+  //   // console.log("pos: "+j+","+k);
+  // }
 });
 
 

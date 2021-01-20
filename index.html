@@ -15,50 +15,51 @@
   <link href="https://fonts.googleapis.com/css2?family=Modak&display=swap" rel="stylesheet"> -->
 </head>
 
-<body>
-  
-  <h1>Hola</p>
+<body onload="init()">
+  <div class="u-centerText">
+    <h1>Hola</h1>
 
-    <button id="rect" class="Collaging-button">Rect</button>
-    <button id="circ" class="Collaging-button">Circ</button>
-    <button id="group" class="Collaging-button">Group</button>
-    <button id="ungroup" class="Collaging-button">Ungroup</button>
-    <button id="snip" class="Collaging-button">SNIP</button>
-
-    <div>
+    <div id="Collaging-tools">
+      <!-- <button id="rect" class="Collaging-button">Rect</button>
+      <button id="circ" class="Collaging-button">Circ</button> -->
+      <button id="group" class="Collaging-button">Group</button>
+      <button id="ungroup" class="Collaging-button">Ungroup</button>
+      <button id="snip" class="Collaging-button">Snip(no work yet)</button>    
       <button id="drawing-mode" class="Collaging-button">Draw</button>
-
+      <form id="file-upload" class="u-inline"autocomplete="off">
+        <input id="input-file-upload" type="file" class="u-inline"/>
+        <button id="btn-file-upload" class="Collaging-button" type="button" class="u-inline">Upload Picture</button>
+      </form>
     </div>
-    <div id="drawing-mode-options">      
-      <input type="color" value="#00c8f0" id="drawing-color">
+
+    <div id="drawing-mode-options u-centerText">      
+      <input type="color" value="#00c8f0" id="drawing-color" class="u-inline">
+      <p class="slider-text" class="u-inline">Stroke Color</p>
       <input type="range" min="1" max="20" value="4" step='1' class="slider" id="drawing-line-width">
-      <p class="slider-text">Color</p>
-      <p id="widthSliderValue" class="slider-text">Width: 4</p>
+      <p id="widthSliderValue" class="slider-text">Stroke Width: 4</p>
     </div>
     
-    <form id="file-upload" autocomplete="off">
-      <input id="input-file-upload" type="file" class="u-inline"/>
-      <button id="btn-file-upload" class="Collaging-button" type="button" class="u-inline">Picture</button>
-    </form>
-
-
-
-    <button id="save">Save</button>
-    <input type="text" id="text" />
     
-    <div id="Collaging-container">
-      <div class="canvas-box">
-        <canvas id="c" width="1500" height="900"></canvas>
-
-      </div>
-      <div class="canvas-box">      
-        <canvas id="cropCanvas" width="900" height="900"></canvas>
-
-      </div>
-        
-        
       
+
+  </div>
+
+
+
+    
+  <div id="Collaging-container">
+    <div class="canvas-box">
+      <canvas id="c" width="1500" height="900"></canvas>
     </div>
+    <button id="save" class="Collaging-button">Save</button>
+    <div class="canvas-box">  
+        <canvas id="preview" width=900 height=900 style="border:red 2px solid">
+        <!-- <canvas id="cropCanvas" width="900" height="900"></canvas> -->
+    </div>
+      
+      
+    
+  </div>
     
     
 
