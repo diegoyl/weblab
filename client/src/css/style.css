@@ -2,6 +2,11 @@
     --main-color: rgb(252, 101, 113);
     --green-color: rgb(214, 214, 214);
     --gray-color: rgb(194, 194, 194);
+    --toolButton-color: rgb(193, 193, 193);
+    --toolButtonActive-color: rgb(255, 174, 0);
+    --colorPicker: rgba(255, 72, 0, 0.7);
+    --colorPicker: rgba(255, 72, 0, 0.7);
+    --colorPicker: rgb(255, 166, 0);
 }
 
 body,p,h1,h2,h3,h4,h5,h6 {font-family: sans-serif;}
@@ -47,6 +52,11 @@ canvas {
   display: block;
   /* height: 1200px; */
   /* vertical-align: top; */
+}
+#snipCanvas {
+  background-size: cover;
+  background-size: center;
+
 }
 
 .Collaging-button {
