@@ -15,7 +15,8 @@
 */
 
 /* TODO: REPLACE WITH YOUR OWN FONT! */
-@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css?family=DM+Sans&display=swap");
+* {font-family: 'DM Sans' !important;}
 
 :root {
   --primary: #396dff;
@@ -34,9 +35,9 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Roboto", sans-serif;
   font-weight: 300;
 }
+
 
 form {
   flex-grow: 1;

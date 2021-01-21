@@ -1,13 +1,13 @@
 // notes / ideas
 // - what if you have to lock every picture so its like gluing in real collaging
 
-
 function init () {
 }
 
 // 0. INITIALIZE CANVAS, CUSTOMIZATION
 // 1. COLLAGING TOOLS
 // 2. DOWNLOADING COLLAGE
+// 3. ZOOMING
 
 
 // INITIALIZE FABRIC CANVAS FOR COLLAGING 0000000
@@ -325,4 +325,28 @@ $("#save").on("click", function(e) {
     // downloadPNG(pngData);
   };
   pred.src = canvas.toDataURL('image/png');
+});
+
+
+/////////////////////////////////////////////////
+// ZOOMING --------------------------------------
+/////////////////////////////////////////////////
+var maxZoom = 5;
+var minZoom = 0.3;
+// var zoomBound = 5000;
+
+    // RESETING ZOOM TO CENTER
+// $("#center").on("click", function(e) {
+//   canvas.zoom({ x: 750, y: 450 }, 1);
+// });
+canvas.on('mouse:wheel', function(opt) {
+  var delta = opt.e.deltaY;
+  var zoom = canvas.getZoom();
+  zoom *= 0.999 ** delta;
+  if (zoom > maxZoom) zoom = maxZoom;
+  if (zoom < minZoom) zoom = minZoom;
+
+  canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
+  opt.e.preventDefault();
+  opt.e.stopPropagation();
 });
