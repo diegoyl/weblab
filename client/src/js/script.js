@@ -14,8 +14,14 @@ function init () {
 var canvas = new fabric.Canvas('c', {
   isDrawingMode: false,
 });
-canvas.setHeight(900);
-canvas.setWidth(1500);
+
+const CANVAS_WIDTH = canvas.width;
+const CANVAS_HEIGHT = canvas.height;
+console.log("CANVAS_HEIGHT: "+CANVAS_HEIGHT);
+console.log("CANVAS_WIDTH: "+CANVAS_WIDTH);
+
+canvas.setHeight(CANVAS_HEIGHT);
+canvas.setWidth(CANVAS_WIDTH);
 // canvas.setBackgroundImage('./client/gf3.png', canvas.renderAll.bind(canvas));
 canvas.setBackgroundImage('./client/src/img/artboard.png', canvas.renderAll.bind(canvas));
 canvas.setOverlayImage('./client/src/img/artboard-overlay.png', canvas.renderAll.bind(canvas));
@@ -309,7 +315,9 @@ $("#download").on("click", function(e) {
 // FOR DOWNLOADING DONT DELETE
 
 $("#save").on("click", function(e) {
+  centerArtboard();
   discard(); // discards
+
   const scale = document.getElementById("preview").width/300;
   var pngData;
 
@@ -319,7 +327,7 @@ $("#save").on("click", function(e) {
 
   var pred = new Image();
   pred.onload = function() {
-    prevCtx.drawImage(pred, -600*scale, -300*scale, 1500*scale, 900*scale);
+    prevCtx.drawImage(pred, -600*scale, -300*scale, CANVAS_WIDTH*scale, CANVAS_HEIGHT*scale);
     pngData = prevCanvas.toDataURL();
     // UNCOMMENT TO DOWNLOAD
     // downloadPNG(pngData);
@@ -329,16 +337,14 @@ $("#save").on("click", function(e) {
 
 
 /////////////////////////////////////////////////
-// ZOOMING --------------------------------------
+// ZOOMING and DRAGGING--------------------------------------
 /////////////////////////////////////////////////
 var maxZoom = 5;
 var minZoom = 0.3;
-// var zoomBound = 5000;
+var zoomBound = 1000;
+var trackX = 0;
+var trackY = 0;
 
-    // RESETING ZOOM TO CENTER
-// $("#center").on("click", function(e) {
-//   canvas.zoom({ x: 750, y: 450 }, 1);
-// });
 canvas.on('mouse:wheel', function(opt) {
   var delta = opt.e.deltaY;
   var zoom = canvas.getZoom();
@@ -349,4 +355,51 @@ canvas.on('mouse:wheel', function(opt) {
   canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
   opt.e.preventDefault();
   opt.e.stopPropagation();
+});
+
+// RESETING ZOOM TO CENTER
+$("#center").on("click", function(e) {
+  centerArtboard();
+});
+function centerArtboard () {
+  var defaultZoom = 1;
+  canvas.setViewportTransform([defaultZoom,0,0,defaultZoom,0,0]);
+}
+
+
+// DRAGGING
+canvas.on('mouse:down', function(opt) {
+  var evt = opt.e;
+  if (evt.altKey === true) {
+    this.isDragging = true;
+    this.selection = false;
+    this.lastPosX = evt.clientX;
+    this.lastPosY = evt.clientY;
+  }
+});
+canvas.on('mouse:move', function(opt) {
+  if (this.isDragging) {
+    var e = opt.e;
+    var vpt = this.viewportTransform;
+    console.log("LAST  " + this.lastPosX+" , "+this.lastPosY);
+    console.log("now   " + e.clientX+" , "+e.clientY);
+
+    let deltaX = e.clientX - this.lastPosX;
+    let deltaY = e.clientY - this.lastPosY;
+    vpt[4] += deltaX;
+    vpt[5] += deltaY;
+    trackX += deltaX;
+    trackY += deltaY;
+    this.requestRenderAll();
+    this.lastPosX = e.clientX;
+    this.lastPosY = e.clientY;
+    console.log("now   " + trackX+" , "+trackY);
+  }
+});
+canvas.on('mouse:up', function(opt) {
+  // on mouse up we want to recalculate new interaction
+  // for all objects, so we call setViewportTransform
+  this.setViewportTransform(this.viewportTransform);
+  this.isDragging = false;
+  this.selection = true;
 });
