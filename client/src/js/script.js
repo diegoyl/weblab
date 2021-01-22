@@ -14,17 +14,42 @@ function init () {
 var canvas = new fabric.Canvas('c', {
   isDrawingMode: false,
 });
+var man = document.getElementById("c");
+var ctx = man.getContext('2d');
+ 
+// const CANVAS_WIDTH = canvas.width;
+// const CANVAS_HEIGHT = canvas.height;
+window.addEventListener('resize', resizeCanvas, false);
 
-const CANVAS_WIDTH = canvas.width;
-const CANVAS_HEIGHT = canvas.height;
-console.log("CANVAS_HEIGHT: "+CANVAS_HEIGHT);
-console.log("CANVAS_WIDTH: "+CANVAS_WIDTH);
+function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+}
+const artSpaceWidth = 1500;
+const artSpaceHeight = 900;
+const artBoardWidth = 300;
+const artBoardHeight = 300;
+const initialUserWidth = window.innerWidth;
+var CANVAS_WIDTH = 1500;
+var CANVAS_HEIGHT = 900;
+console.log("HEIGHT: "+window.innerHeight);
+console.log("WIDTH: "+window.innerWidth);
 
-canvas.setHeight(CANVAS_HEIGHT);
-canvas.setWidth(CANVAS_WIDTH);
+canvas.setHeight(4000);
+canvas.setWidth(4000);
 // canvas.setBackgroundImage('./client/gf3.png', canvas.renderAll.bind(canvas));
 canvas.setBackgroundImage('./client/src/img/artboard.png', canvas.renderAll.bind(canvas));
 canvas.setOverlayImage('./client/src/img/artboard-overlay.png', canvas.renderAll.bind(canvas));
+
+// centerArtboard
+var initialZoom = window.innerWidth/1500;
+// initialZoom = 1;
+var initialX = 0.5 * (window.innerWidth - artSpaceWidth*initialZoom);
+var initialY = 0.5 * (window.innerHeight - artSpaceHeight*initialZoom);
+
+
+console.log("inital xy: "+initialX*initialZoom+" , "+initialY);
+canvas.setViewportTransform([initialZoom,0,0,initialZoom,initialX,initialY]);
 
 
 // CANVAS CUSTOMIZATION 1111111
@@ -314,27 +339,31 @@ $("#download").on("click", function(e) {
 });
 // FOR DOWNLOADING DONT DELETE
 
-$("#save").on("click", function(e) {
-  centerArtboard();
+$("#save").on("click", function(e) { 
+  $('#popup').css("display", "block");
+
+  canvas.setViewportTransform([1,0,0,1,1350,1550]); // zoom for crop
   discard(); // discards
-
-  const scale = document.getElementById("preview").width/300;
-  var pngData;
-
+  const scale = document.getElementById("preview").width/artBoardWidth;
 
   var prevCanvas = document.getElementById("preview");
   var prevCtx = prevCanvas.getContext("2d");
 
   var pred = new Image();
   pred.onload = function() {
-    prevCtx.drawImage(pred, -600*scale, -300*scale, CANVAS_WIDTH*scale, CANVAS_HEIGHT*scale);
+    prevCtx.drawImage(pred, -1950*scale, -1850*scale, pred.width*scale, pred.height*scale);
     pngData = prevCanvas.toDataURL();
+    document.getElementById("img2").src = pngData;
     // UNCOMMENT TO DOWNLOAD
     // downloadPNG(pngData);
   };
   pred.src = canvas.toDataURL('image/png');
 });
 
+$("#backPopup").on("click", function(e) { 
+  centerArtboard(); 
+  $('#popup').css("display", "none"); 
+});
 
 /////////////////////////////////////////////////
 // ZOOMING and DRAGGING--------------------------------------
@@ -362,11 +391,13 @@ $("#center").on("click", function(e) {
   centerArtboard();
 });
 function centerArtboard () {
-  var defaultZoom = 1;
-  canvas.setViewportTransform([defaultZoom,0,0,defaultZoom,0,0]);
+  var initialZoom = window.innerWidth/1500;
+  var initialX = 0.5 * (window.innerWidth - artSpaceWidth*initialZoom);
+  var initialY = 0.5 * (window.innerHeight - artSpaceHeight*initialZoom);
+
+  console.log("inital xy: "+initialX+" , "+initialY);
+  canvas.setViewportTransform([initialZoom,0,0,initialZoom,initialX,initialY]);
 }
-
-
 // DRAGGING
 canvas.on('mouse:down', function(opt) {
   var evt = opt.e;
