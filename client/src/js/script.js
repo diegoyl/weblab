@@ -14,26 +14,27 @@ function init () {
 var canvas = new fabric.Canvas('c', {
   isDrawingMode: false,
 });
-var man = document.getElementById("c");
-var ctx = man.getContext('2d');
- 
-// const CANVAS_WIDTH = canvas.width;
-// const CANVAS_HEIGHT = canvas.height;
-window.addEventListener('resize', resizeCanvas, false);
 
+const navWidth = 200;
+var navOffset = 400;
+function getUserWidth() {
+   return window.innerWidth - navWidth;
+}
+window.addEventListener('resize', resizeCanvas, false);
 function resizeCanvas() {
-        canvas.width = window.innerWidth;
+        canvas.width = getUserWidth();
         canvas.height = window.innerHeight;
 }
 const artSpaceWidth = 1500;
 const artSpaceHeight = 900;
 const artBoardWidth = 300;
 const artBoardHeight = 300;
-const initialUserWidth = window.innerWidth;
+const initialUserWidth = getUserWidth();
+
 var CANVAS_WIDTH = 1500;
 var CANVAS_HEIGHT = 900;
 console.log("HEIGHT: "+window.innerHeight);
-console.log("WIDTH: "+window.innerWidth);
+console.log("WIDTH: "+getUserWidth());
 
 canvas.setHeight(4000);
 canvas.setWidth(4000);
@@ -42,13 +43,12 @@ canvas.setBackgroundImage('./client/src/img/artboard.png', canvas.renderAll.bind
 canvas.setOverlayImage('./client/src/img/artboard-overlay.png', canvas.renderAll.bind(canvas));
 
 // centerArtboard
-var initialZoom = window.innerWidth/1500;
+var initialZoom = getUserWidth()/1500;
 // initialZoom = 1;
-var initialX = 0.5 * (window.innerWidth - artSpaceWidth*initialZoom);
+var initialX = 0.5 * (getUserWidth() + navOffset - artSpaceWidth*initialZoom);
 var initialY = 0.5 * (window.innerHeight - artSpaceHeight*initialZoom);
 
 
-console.log("inital xy: "+initialX*initialZoom+" , "+initialY);
 canvas.setViewportTransform([initialZoom,0,0,initialZoom,initialX,initialY]);
 
 
@@ -342,6 +342,7 @@ $("#download").on("click", function(e) {
 $("#save").on("click", function(e) { 
   $('#popup').css("display", "block");
 
+  document.getElementById("img2").src = "";
   canvas.setViewportTransform([1,0,0,1,1350,1550]); // zoom for crop
   discard(); // discards
   const scale = document.getElementById("preview").width/artBoardWidth;
@@ -391,8 +392,8 @@ $("#center").on("click", function(e) {
   centerArtboard();
 });
 function centerArtboard () {
-  var initialZoom = window.innerWidth/1500;
-  var initialX = 0.5 * (window.innerWidth - artSpaceWidth*initialZoom);
+  var initialZoom = getUserWidth()/1500;
+  var initialX = 0.5 * (getUserWidth() + navOffset - artSpaceWidth*initialZoom);
   var initialY = 0.5 * (window.innerHeight - artSpaceHeight*initialZoom);
 
   console.log("inital xy: "+initialX+" , "+initialY);

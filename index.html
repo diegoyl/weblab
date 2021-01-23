@@ -7,6 +7,7 @@
   <meta name="description" content=''>
 
   <link rel="stylesheet" href="./client/src/css/style.css">
+  <link rel="stylesheet" href="./client/src/css/nav.css">
   <link rel="stylesheet" href="./client/src/utilities.css">
   <script src="./lib/jquery-3.5.1.min.js"></script>
 	<link rel="icon" href="./client/src/public/icon/favicon.png">
@@ -17,67 +18,19 @@
 </head>
 
 <body onload="init()">
-  <div id="layer0" class="layerDiv">
 
-      <!-- CANVASES -->
-      <div class="canvas-box">
-        <canvas id="c"></canvas>
-      </div>
-
-      <canvas id="snipCanvas" width="500" height="500"></canvas>
-      
-      
-      <!-- TOOLBOX -->
-      <div id="Collaging-tools">
-        <button id="snip" class="Collaging-button">Snip(no work yet)</button>    
-        <form id="file-upload" class="u-inline"autocomplete="off">
-          <input id="input-file-upload" type="file" class="u-inline"/>
-          <button id="btn-file-upload" class="Collaging-button" type="button" class="u-inline">Upload Picture</button>
-        </form>
-        <br>
-        <button id="drawing-mode" class="Collaging-button">Enter drawing mode</button>
-        <button id="group" class="Collaging-button">Group</button>
-        <br>
-        <button id="ungroup" class="Collaging-button">Ungroup</button>
-        <button id="copypaste" class="Collaging-button">Duplicate Selection</button>
-        <br>
-        <button id="delete" class="Collaging-button">X Delete</button>
-        <button id="center" class="Collaging-button">Center Artboard</button>
-        <br>
-        <button id="save" class="Collaging-button">FINISH</button>
-        <!-- <button id="rect" class="Collaging-button">Rect</button>
-        <button id="circ" class="Collaging-button">Circ</button> --->
-      
-         <!-- HIDDEN TOOLS -->
-        <div id="drawing-mode-options" class="u-centerText">      
-          <input type="color" value="#00c8f0" id="drawing-color" class="u-inline">
-          <p class="slider-text" class="u-inline">Stroke Color</p>
-          <input type="range" min="1" max="50" value="6" step='1' class="slider" id="drawing-line-width">
-          <p id="widthSliderValue" class="slider-text">Stroke Width: 6</p>
-        </div>
-      </div>
-
-
-      <div id="popup">
-        <div class="canvas-box">  
-          <img src="" id="img2" width=400 height=400>
-          <canvas id="preview" width=400 height=400 >
-        </div>
-        <button id="download" class="Collaging-button">DOWNLOAD</button>
-        <button id="backPopup" class="Collaging-button">close</button>
-      </div>
-
-  </div>
   
 
   <div class="u-centerText">
+    <h1>Welcome Page!!!</h1>
 
 
 
-  <!-- <div class="u-centerText">
-    <h1>Scroll to Zoom</h1>
-    <h1>Alt+Drag to drag canvas</h1>
-  </div> -->
+  </div>
+
+  <div id="nav">
+    <a href="./collage.html">Collage!</a>
+  </div>
         
 <script src="./lib/fabric.min.js"></script>
 <script src="./client/src/js/script.js"></script>

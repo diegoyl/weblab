@@ -79,13 +79,16 @@ body {
   position: relative;
 }
 #Collaging-tools {
-  margin: auto;
-  text-align: center;
-  background-color: crimson;
-  position: fixed;
-  top: 50px;
-  left: 50px;
   z-index: 15;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 200px;
+  background-color: saddlebrown;
+  text-align: center;
+  text-decoration: none;
+  color: sandybrown;
 }
 .hoverThing {
   position: absolute;
@@ -120,22 +123,29 @@ canvas {
 
 .Collaging-button {
   background-color: rgb(255, 248, 240);
-  padding: 10px;
-  font-size: 20px;
+  padding: 4px;
+  margin: 4px;
+  font-size: 10px;
   font-weight: bold;
-  width: 150px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   vertical-align: top;
-  border: rgb(70, 56, 43) 3px solid;
+  border: rgb(70, 56, 43) 4px solid;
   border-radius: 10px;
   line-height: 1.1;
-  box-shadow: blue;
+  box-shadow: 0px 4px rgba(0, 0, 0, 0.3); 
+  outline: none;
 }
 .Collaging-button:hover {
-  border: rgb(207, 111, 0) 6px solid;
+  border: rgb(207, 111, 0) 4px solid;
   color: rgb(207, 111, 0);
   cursor: pointer;
 }
+.Collaging-button:active {
+  background-color: rgb(253, 214, 168);
+  transform: translateY(4px);
+  box-shadow: 0px 0px rgba(0, 0, 0, 0.3); 
+} 
 
 #file {
   display: none;
